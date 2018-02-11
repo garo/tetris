@@ -1,4 +1,4 @@
-# Coding excercise: tetris from scratch without seeing any reference implementations
+# Coding exercise: tetris from scratch without seeing any reference implementations
 
 I've never programmed a tetris game before, so I wanted to try how long it would take from me to code one from scratch, without seeing any reference implementation, stack overflow or anything else beside javadoc.
 
