@@ -7,11 +7,14 @@ import java.awt.event.KeyListener;
 
 
 public class Main extends JFrame implements KeyListener {
+    // Block width/height in pixels. 
     final int BLOCK_SIZE = 30;
 
+    // Which key is currently pressed down, if any (0 means no key pressed)
     private int currentKey = 0;
     private boolean pause = false;
 
+    // Our JPanel which we use to draw the game screen
     private class DrawCanvas extends JPanel {
 
         TetrisGame game;
@@ -29,8 +32,9 @@ public class Main extends JFrame implements KeyListener {
             // Draw actual board with contents
             g.setColor(Color.BLUE);
             g.drawRect(0, 0, 10, 10);
+            
+            // Iterate over all different blocks in the screen and draw rectangles based on the block contents.
             for (int y = 0; y < game.height; y++) {
-
                 for (int x = 0; x < game.width; x++) {
                     int b = game.getXY(x, y);
                     Color color = Color.WHITE;
@@ -100,6 +104,7 @@ public class Main extends JFrame implements KeyListener {
         TetrisGame game = new TetrisGame();
         game.spawn();
 
+        // Setup our UI.
         canvas = new DrawCanvas(game);
         canvas.setPreferredSize(new Dimension(game.width * BLOCK_SIZE,
                 game.height * BLOCK_SIZE));
@@ -118,11 +123,12 @@ public class Main extends JFrame implements KeyListener {
             public void run() {
                 int lastAdvance = 0;
                 boolean game_over = false;
+                
+                // Main loop runs on 50 Hz.
                 do {
                     repaint();
                     try {
                         Thread.sleep(20);
-
                     } catch(Exception e) {}
 
                     // Handle key processing once per frame and then reset the currentKey so
@@ -145,14 +151,15 @@ public class Main extends JFrame implements KeyListener {
                             pause = !pause;
                             break;
                     }
+                    
+                    // Key has been handled, so don't handle it again on next frame.
                     currentKey = 0;
 
+                    // Advance the game (ie. move current block down) every 10th frame.
                     if (!pause && lastAdvance++ > 10) {
                         lastAdvance = 0;
                         game_over = game.advance();
                     }
-
-
                 } while(true);
             }
         };
