@@ -207,7 +207,6 @@ public class TetrisGame {
             if (completed) {
                 System.out.println("Line " + y + " is completed");
                 for (int i = y; i > 0; i--) {
-                    System.out.println("Copying line " + (i-1) + " to line " + i);
                     for (int x = 0; x < width; x++) {
                         board[x][i] = board[x][i - 1];
                     }
